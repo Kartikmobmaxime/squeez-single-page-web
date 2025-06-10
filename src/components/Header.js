@@ -32,12 +32,12 @@ export default function Header() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav mx-auto">
                         <li className="nav-item me-5">
-                            <a className="nav-link text-light fw-semibold" href="#" style={{ fontSize: '18px' }}>
+                            <a className="nav-link text-light" href="#" style={{ fontSize: '18px' }}>
                                 About Squeez
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link text-light fw-semibold" href="#" style={{ fontSize: '18px' }}>
+                            <a className="nav-link text-light" href="#" style={{ fontSize: '18px' }}>
                                 Squeez for Business
                             </a>
                         </li>

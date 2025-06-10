@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 
 const BusinessList = () => {
-    
+
     const restaurants = [
         {
             id: 1,
@@ -71,61 +71,68 @@ const BusinessList = () => {
 
     return (
         <>
-            <section className="hero-section bg-navy">
-                <h1 className="hero-title text-orange">
-                    Explore and Choose Your Spot
-                </h1>
-            </section>
+            <div className="hero-section bg-navy d-flex align-items-center">
+                <div className="container text-center">
+                    <h1 className="hero-title text-orange">
+                        Explore and Choose Your Spot
+                    </h1>
+                </div>
+            </div>
 
-            <section className="container my-5">
+            <div className="container">
                 <div className="card reservation-card">
-                    <div className="card-body p-0">
+                    <div className="card-body p-4">
                         <div className="row g-0">
                             {reservationFields.map((field, index) => (
                                 <div
                                     key={index}
-                                    className={`col-lg-3 col-md-6 col-12 p-4 text-center ${index < reservationFields.length - 1 ? 'border-end' : ''
+                                    className={`col-lg-3 col-md-6 col-12 py-2 px-4 ${index < reservationFields.length - 1 ? 'border-end' : ''
                                         }`}
                                 >
-                                    <div className="text-muted-gray" style={{ fontSize: '19px' }}>
+                                    <div className="text-muted-gray fw-medium">
                                         {field.label}
                                     </div>
-                                    <div className="text-navy fw-semibold mt-1" style={{ fontSize: '19px' }}>
+                                    <div className="text-navy fw-semibold">
                                         {field.value}
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <div className="text-center pb-4">
-                            <button className="btn-orange px-5 py-3">
-                                <span className="fw-semibold" style={{ fontSize: '21px' }}>
-                                    FIND OPTIONS
-                                </span>
-                            </button>
-                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section className="container my-5 py-5">
-                <div className="row g-4">
+            <div className="container pt-5">
+                <div className='d-flex justify-content-between mb-4'>
+                    <div className="text-navy fs-sm">
+                        <div className="text-navy fw-semibold">42 matches</div>
+                        <p className='mb-0 fw-medium'>Showing based on your preferences</p>
+                    </div>
+                    <button class="btn-orange px-3 py-2 d-flex align-items-center align-self-center">
+                        <span class="fw-semibold me-2">Filter</span>
+                        <div class="">
+                            <img alt="Squeez Logo" src="media/filter-icon.svg" />
+                        </div>
+                    </button>
+                </div>
+                <div className="row g-xl-5 g-4">
                     {restaurants.map((restaurant) => (
                         <div key={restaurant.id} className="col-lg-4 col-md-6 col-12">
                             <div className="card restaurant-card h-100">
-                                <div className="card-body p-0 position-relative">
+                                <div className="card-body position-relative p-4">
                                     <img
                                         src={restaurant.image}
                                         alt={`${restaurant.name} image`}
                                         className="restaurant-image"
                                     />
 
-                                    <div className="px-4">
-                                        <div className="d-flex justify-content-between align-items-center mb-3">
-                                            <h5 className="text-navy fw-semibold mb-0" style={{ fontSize: '22px' }}>
+                                    <div className="mt-3">
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <h5 className="text-navy fw-semibold mb-0">
                                                 {restaurant.name}
                                             </h5>
-                                            <div className="d-flex align-items-center">
-                                                <i className="fas fa-star text-orange me-2"></i>
+                                            <div className="d-flex align-items-center gap-2">
+                                                <img alt="Star Icon" src="media/img/star-icon.svg" />
                                                 <span className="text-orange" style={{ fontSize: '20px' }}>
                                                     {restaurant.rating}
                                                 </span>
@@ -134,10 +141,10 @@ const BusinessList = () => {
 
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <div className="text-dark-gray" style={{ fontSize: '19px' }}>
+                                                <div className="text-dark-gray fs-sm">
                                                     {restaurant.location}
                                                 </div>
-                                                <div className="text-dark-gray mt-1" style={{ fontSize: '19px' }}>
+                                                <div className="text-dark-gray mt-1 fs-sm">
                                                     {restaurant.cuisine}
                                                 </div>
                                             </div>
@@ -153,15 +160,16 @@ const BusinessList = () => {
                         </div>
                     ))}
                 </div>
-            </section>
+                <div className="text-center mt-5">
+                    <button className="btn-orange px-5 py-3">
+                        <span className="fw-semibold" style={{ fontSize: '21px' }}>
+                            Show More
+                        </span>
+                    </button>
+                </div>
+            </div>
 
-            <section className="container text-center my-5">
-                <button className="btn-orange px-5 py-3">
-                    <span className="fw-semibold" style={{ fontSize: '21px' }}>
-                        Show More
-                    </span>
-                </button>
-            </section>
+
         </>
     );
 }

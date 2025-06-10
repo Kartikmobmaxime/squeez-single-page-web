@@ -6,10 +6,64 @@
   --text-gray: #0000006b;
 }
 
+@font-face {
+  font-family: 'Proxima Nova Rg';
+  src: url('../public/media/fonts/ProximaNova-Bold.woff2') format('woff2'),
+    url('../public/media/fonts/ProximaNova-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('../public/media/fonts/Jost-Bold.woff2') format('woff2'), url('../public/media/fonts/Jost-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('../public/media/fonts/Jost-Medium.woff2') format('woff2'), url('../public/media/fonts/Jost-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('../public/media/fonts/Jost-Regular.woff2') format('woff2'), url('../public/media/fonts/Jost-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('../public/media/fonts/Jost-SemiBold.woff2') format('woff2'), url('../public/media/fonts/Jost-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   font-family: 'Jost', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+
+h1 {
+  font-family: 'Proxima Nova Rg';
+}
+
+.fw-medium {
+  font-weight: 500 !important;
+}
+
+.fs-sm {
+  font-size: 1.188rem !important;
 }
 
 .bg-navy {
@@ -41,7 +95,7 @@ body {
 }
 
 .hero-section {
-  background: linear-gradient(0deg, rgba(18,23,68,0) 38%, rgba(18,23,68,1) 81%), url('https://assets.bonappetit.com/photos/57d6fdf41807135a7746d6db/16:9/w_2560%2Cc_limit/CP_Interior2.jpg');
+  background: linear-gradient(0deg,rgba(0, 0, 0, 0) 0%, rgba(18, 23, 68, 1) 100%), url('https://assets.bonappetit.com/photos/57d6fdf41807135a7746d6db/16:9/w_2560%2Cc_limit/CP_Interior2.jpg');
   background-size: cover;
   background-position: center;
   height: 320px;
@@ -52,13 +106,6 @@ body {
   font-size: 54px;
   font-weight: 700;
   line-height: 61px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  text-align: center;
-  padding: 0 20px;
 }
 
 .reservation-card {
@@ -68,13 +115,14 @@ body {
   position: relative;
   z-index: 10;
   background: white;
+  font-size: 1.188rem;
 }
 
+
+
 .restaurant-card {
-  border-radius: 24px;
+  border-radius: 1.5rem;
   border: 0.75px solid var(--primary-navy);
-  height: 363px;
-  overflow: hidden;
   transition: transform 0.3s ease;
 }
 
@@ -83,12 +131,16 @@ body {
 }
 
 .restaurant-image {
-  width: 100%;
   height: 204px;
+  width: 100%;
   object-fit: cover;
-  margin: 21px 0;
-  padding: 0 24px;
-  border-radius: 12px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+
+.restaurant-card h5 {
+  font-size: 1.375rem;
 }
 
 .btn-orange {
@@ -124,28 +176,31 @@ body {
 ul {
   padding-left: 1.25rem;
 }
+
 ul li {
   margin-bottom: 5px;
 }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 36px;
-    line-height: 42px;
-  }
-  
-  .reservation-card .row > div {
+
+@media (max-width: 992px) {
+.hero-section {
+  height: 200px;
+}
+  .reservation-card .row>div {
     border-bottom: 1px solid #dee2e6;
     border-right: none !important;
   }
-  
-  .reservation-card .row > div:last-child {
+    .hero-title {
+    font-size: 36px;
+    line-height: 42px;
+  }
+}
+
+@media (max-width: 767px) {
+  .reservation-card .row>div:last-child {
     border-bottom: none;
   }
-  
-  .restaurant-card {
-    margin-bottom: 20px;
-  }
+
 }
 
 @media (max-width: 576px) {
