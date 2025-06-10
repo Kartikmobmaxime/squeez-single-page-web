@@ -1,0 +1,156 @@
+:root {
+  --primary-navy: #121744;
+  --primary-orange: #f77148;
+  --light-gray: #f2f2f2;
+  --dark-gray: #666666;
+  --text-gray: #0000006b;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.bg-navy {
+  background-color: var(--primary-navy) !important;
+}
+
+.bg-orange {
+  background-color: var(--primary-orange) !important;
+}
+
+.text-orange {
+  color: var(--primary-orange) !important;
+}
+
+.text-navy {
+  color: var(--primary-navy) !important;
+}
+
+.text-light-gray {
+  color: var(--light-gray) !important;
+}
+
+.text-dark-gray {
+  color: var(--dark-gray) !important;
+}
+
+.text-muted-gray {
+  color: var(--text-gray) !important;
+}
+
+.hero-section {
+  background: linear-gradient(0deg, rgba(18,23,68,0) 38%, rgba(18,23,68,1) 81%), url('https://assets.bonappetit.com/photos/57d6fdf41807135a7746d6db/16:9/w_2560%2Cc_limit/CP_Interior2.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 320px;
+  position: relative;
+}
+
+.hero-title {
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 61px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.reservation-card {
+  border-radius: 24px;
+  box-shadow: 0px 0px 10px 3px rgba(18, 23, 68, 0.15);
+  margin-top: -60px;
+  position: relative;
+  z-index: 10;
+  background: white;
+}
+
+.restaurant-card {
+  border-radius: 24px;
+  border: 0.75px solid var(--primary-navy);
+  height: 363px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
+}
+
+.restaurant-image {
+  width: 100%;
+  height: 204px;
+  object-fit: cover;
+  margin: 21px 0;
+  padding: 0 24px;
+  border-radius: 12px;
+}
+
+.btn-orange {
+  background-color: #e55a3a;
+  border: none;
+  border-radius: 32px;
+  color: var(--light-gray);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* .btn-orange:hover {
+  background-color: #e55a3a;
+  color: var(--light-gray);
+  transform: translateY(-2px);
+} */
+
+.footer-bg {
+  background: var(--primary-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-logo {
+  /* position: absolute; */
+  bottom: 0;
+  left: 50%;
+  opacity: 0.4;
+  width: 50%;
+  max-width: 1200px;
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+ul li {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+    line-height: 42px;
+  }
+  
+  .reservation-card .row > div {
+    border-bottom: 1px solid #dee2e6;
+    border-right: none !important;
+  }
+  
+  .reservation-card .row > div:last-child {
+    border-bottom: none;
+  }
+  
+  .restaurant-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
