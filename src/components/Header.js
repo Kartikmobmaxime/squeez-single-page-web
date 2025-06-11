@@ -4,7 +4,7 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 export default function Header() {
     return (
         <nav className="navbar navbar-expand-lg bg-navy py-3">
-            <div className="container">
+            <div className="container-fluid container-xl">
                 <a className="navbar-brand" href="#">
                     <img
                         src="media/SqueezLogo_White.svg"
@@ -30,8 +30,8 @@ export default function Header() {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav mx-auto">
-                        <li className="nav-item me-5">
+                    <ul className="navbar-nav mx-auto text-center">
+                        <li className="nav-item me-lg-5">
                             <a className="nav-link text-light" href="#" style={{ fontSize: '18px' }}>
                                 About Squeez
                             </a>
@@ -43,8 +43,8 @@ export default function Header() {
                         </li>
                     </ul>
 
-                    <button className="btn-orange px-3 py-2 d-flex align-items-center">
-                        <span className="fw-semibold me-2" style={{ fontSize: '18px' }}>Log In</span>
+                    <button className="btn-orange px-3 py-2 d-flex align-items-center mx-auto mx-lg-0 mt-lg-0 mt-2">
+                        <span className="pe-3 fw-normal" style={{ fontSize: '18px' }}>Log In</span>
                         <div className="bg-white rounded-circle d-flex align-items-center justify-content-center"
                             style={{ width: '31px', height: '31px' }}>
                                  <img

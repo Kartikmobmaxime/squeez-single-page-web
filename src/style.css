@@ -51,8 +51,12 @@ body {
   font-family: 'Jost', sans-serif;
   margin: 0;
   padding: 0;
+   font-weight: normal;
 }
 
+a {
+  text-decoration: none;
+}
 
 h1 {
   font-family: 'Proxima Nova Rg';
@@ -94,6 +98,10 @@ h1 {
   color: var(--text-gray) !important;
 }
 
+.fw-normal {
+  font-weight: 400 !important;
+}
+
 .hero-section {
   background: linear-gradient(0deg,rgba(0, 0, 0, 0) 0%, rgba(18, 23, 68, 1) 100%), url('https://assets.bonappetit.com/photos/57d6fdf41807135a7746d6db/16:9/w_2560%2Cc_limit/CP_Interior2.jpg');
   background-size: cover;
@@ -126,8 +134,17 @@ h1 {
   transition: transform 0.3s ease;
 }
 
+.star-icon {
+  margin-top: -4px;
+}
+
 .restaurant-card:hover {
   transform: translateY(-5px);
+  border-color: var(--primary-orange) !important;
+}
+
+.restaurant-card:hover h5 {
+ color: var(--primary-orange) !important;
 }
 
 .restaurant-image {
@@ -157,20 +174,16 @@ h1 {
   color: var(--light-gray);
   transform: translateY(-2px);
 } */
-
+footer {
+  padding-top: 6.25rem;
+}
+footer a:hover {
+  color: var(--primary-orange) !important;
+}
 .footer-bg {
   background: var(--primary-navy);
   position: relative;
   overflow: hidden;
-}
-
-.footer-logo {
-  /* position: absolute; */
-  bottom: 0;
-  left: 50%;
-  opacity: 0.4;
-  width: 50%;
-  max-width: 1200px;
 }
 
 ul {
@@ -182,7 +195,17 @@ ul li {
 }
 
 
-@media (max-width: 992px) {
+@media (min-width: 1400px) {
+    .container-xl {
+        max-width: 1366px;
+    }
+}
+
+
+@media (max-width: 991px) {
+  footer {
+  padding-top: 4rem;
+}
 .hero-section {
   height: 200px;
 }

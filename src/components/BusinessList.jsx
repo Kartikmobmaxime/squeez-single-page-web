@@ -72,14 +72,14 @@ const BusinessList = () => {
     return (
         <>
             <div className="hero-section bg-navy d-flex align-items-center">
-                <div className="container text-center">
+                <div className="container-fluid container-xl text-center">
                     <h1 className="hero-title text-orange">
                         Explore and Choose Your Spot
                     </h1>
                 </div>
             </div>
 
-            <div className="container">
+            <div className="container-fluid container-xl">
                 <div className="card reservation-card">
                     <div className="card-body p-4">
                         <div className="row g-0">
@@ -102,24 +102,23 @@ const BusinessList = () => {
                 </div>
             </div>
 
-            <div className="container pt-5">
+            <div className="container-fluid container-xl pt-5">
                 <div className='d-flex justify-content-between mb-4'>
                     <div className="text-navy fs-sm">
                         <div className="text-navy fw-semibold">42 matches</div>
                         <p className='mb-0 fw-medium'>Showing based on your preferences</p>
                     </div>
                     <button class="btn-orange px-3 py-2 d-flex align-items-center align-self-center">
-                        <span class="fw-semibold me-2">Filter</span>
-                        <div class="">
-                            <img alt="Squeez Logo" src="media/filter-icon.svg" />
-                        </div>
+                        <span class="fw-semibold pe-3">Filter</span>                        
+                        <img alt="Squeez Logo" src="media/filter-icon.svg" />                    
                     </button>
                 </div>
-                <div className="row g-xl-5 g-4">
+                <div className="row g-xxl-5 g-4">
                     {restaurants.map((restaurant) => (
                         <div key={restaurant.id} className="col-lg-4 col-md-6 col-12">
+                            <a href='#'>
                             <div className="card restaurant-card h-100">
-                                <div className="card-body position-relative p-4">
+                                <div className="card-body position-relative p-md-4 p-3">
                                     <img
                                         src={restaurant.image}
                                         alt={`${restaurant.name} image`}
@@ -132,7 +131,7 @@ const BusinessList = () => {
                                                 {restaurant.name}
                                             </h5>
                                             <div className="d-flex align-items-center gap-2">
-                                                <img alt="Star Icon" src="media/img/star-icon.svg" />
+                                                <img alt="Star Icon" className='star-icon' src="media/img/star-icon.svg" />
                                                 <span className="text-orange" style={{ fontSize: '20px' }}>
                                                     {restaurant.rating}
                                                 </span>
@@ -157,6 +156,7 @@ const BusinessList = () => {
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     ))}
                 </div>
@@ -168,8 +168,6 @@ const BusinessList = () => {
                     </button>
                 </div>
             </div>
-
-
         </>
     );
 }
