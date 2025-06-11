@@ -3,15 +3,19 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { getBusinessLists } from '../services/businessService';
 import { useNavigate } from 'react-router-dom';
 import FilterModal from './FilterModal';
-
+import { LineSpinner } from 'ldrs/react';
+import 'ldrs/react/LineSpinner.css'
+import { useDispatch } from 'react-redux';
+import { hideLoader, showLoader } from '../store/slice/loaderSlice';
 
 
 const BusinessList = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [businessData,setBusinessData] = useState([])
     const [offset, setOffset] = useState(0);
-    const limit = 18;
+    const limit = 9;
     const [hasMore, setHasMore] = useState(true);
 
     const [showModal, setShowModal] = useState(false);
@@ -33,8 +37,10 @@ const BusinessList = () => {
             limit:limit,
             cateId:"65c608806782899b0698f069"
         }
+        dispatch(showLoader())
         try {
             let response = await getBusinessLists(query);
+            dispatch(hideLoader())
             if (response?.status && response.data) {
                 const newDocs = response.data?.docs || [];
 
@@ -43,7 +49,7 @@ const BusinessList = () => {
                 setHasMore(response.data?.hasNextPage)
             }
         } catch (error) {
-            //window.location.href = '/error.html';
+            dispatch(hideLoader())
         } 
     };
 
