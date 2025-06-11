@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { getBusinessLists } from '../services/businessService';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const BusinessList = () => {
+    const navigate = useNavigate();
 
     const [businessData,setBusinessData] = useState([])
     const [offset, setOffset] = useState(0);
@@ -41,6 +43,14 @@ const BusinessList = () => {
         } catch (error) {
             //window.location.href = '/error.html';
         } 
+    };
+
+    const navigateToDetail = (businessId) => {
+        navigate('/business-details', {
+        state: {
+            businessId,
+        }
+        });
     };
 
     return (
@@ -82,14 +92,14 @@ const BusinessList = () => {
                         <div className="text-navy fw-semibold">42 matches</div>
                         <p className='mb-0 fw-medium'>Showing based on your preferences</p>
                     </div>
-                    <button class="btn-orange px-3 py-2 d-flex align-items-center align-self-center">
-                        <span class="fw-semibold pe-3">Filter</span>                        
+                    <button className="btn-orange px-3 py-2 d-flex align-items-center align-self-center">
+                        <span className="fw-semibold pe-3">Filter</span>                        
                         <img alt="Squeez Logo" src="media/filter-icon.svg" />                    
                     </button>
                 </div>
                 <div className="row g-xxl-5 g-4">
                     {businessData.map((restaurant) => (
-                        <div key={restaurant._id} className="col-lg-4 col-md-6 col-12">
+                        <div key={restaurant._id} className="col-lg-4 col-md-6 col-12 cursor-pointer" role="button" onClick={() => navigateToDetail(restaurant._id)}>
                             <div className="card restaurant-card h-100">
                                 <div className="card-body position-relative p-md-4 p-3">
                                     <img
