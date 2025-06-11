@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { getBusinessLists } from '../services/businessService';
 import { useNavigate } from 'react-router-dom';
+import FilterModal from './FilterModal';
 
 
 
@@ -12,6 +13,8 @@ const BusinessList = () => {
     const [offset, setOffset] = useState(0);
     const limit = 18;
     const [hasMore, setHasMore] = useState(true);
+
+    const [showModal, setShowModal] = useState(false);
 
     const reservationFields = [
         { label: "Experience", value: "Restaurant" },
@@ -38,7 +41,6 @@ const BusinessList = () => {
                 setBusinessData((prevData) => [...prevData, ...newDocs]);
                 setOffset((prevOffset) => prevOffset + newDocs.length);
                 setHasMore(response.data?.hasNextPage)
-
             }
         } catch (error) {
             //window.location.href = '/error.html';
@@ -51,6 +53,10 @@ const BusinessList = () => {
             businessId,
         }
         });
+    };
+
+    const handleShowModal = () => {
+        setShowModal(true);
     };
 
     return (
@@ -92,7 +98,7 @@ const BusinessList = () => {
                         <div className="text-navy fw-semibold">42 matches</div>
                         <p className='mb-0 fw-medium'>Showing based on your preferences</p>
                     </div>
-                    <button className="btn-orange px-3 py-2 d-flex align-items-center align-self-center">
+                    <button className="btn-orange px-3 py-2 d-flex align-items-center align-self-center" onClick={() => handleShowModal()}>
                         <span className="fw-semibold pe-3">Filter</span>                        
                         <img alt="Squeez Logo" src="media/filter-icon.svg" />                    
                     </button>
@@ -153,6 +159,12 @@ const BusinessList = () => {
                 )}
                 
             </div>
+            {showModal && (
+                <FilterModal
+                    showPopup={showModal}
+                    handleClose={() => setShowModal(false)}
+                />
+            )}
         </>
     );
 }
