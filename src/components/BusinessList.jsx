@@ -7,6 +7,9 @@ import { getBusinessLists } from '../services/businessService';
 const BusinessList = () => {
 
     const [businessData,setBusinessData] = useState([])
+    const [offset, setOffset] = useState(0);
+    const limit = 18;
+    const [hasMore, setHasMore] = useState(true);
 
     const reservationFields = [
         { label: "Experience", value: "Restaurant" },
@@ -20,10 +23,20 @@ const BusinessList = () => {
     },[])
 
     const fetchBusinessData = async () => {
+        const query = {
+            offset:offset,
+            limit:limit,
+            cateId:"65c608806782899b0698f069"
+        }
         try {
-            let response = await getBusinessLists({ cateId:"65c608806782899b0698f069" });
+            let response = await getBusinessLists(query);
             if (response?.status && response.data) {
-                setBusinessData(response.data?.docs);
+                const newDocs = response.data?.docs || [];
+
+                setBusinessData((prevData) => [...prevData, ...newDocs]);
+                setOffset((prevOffset) => prevOffset + newDocs.length);
+                setHasMore(response.data?.hasNextPage)
+
             }
         } catch (error) {
             //window.location.href = '/error.html';
@@ -77,7 +90,6 @@ const BusinessList = () => {
                 <div className="row g-xxl-5 g-4">
                     {businessData.map((restaurant) => (
                         <div key={restaurant._id} className="col-lg-4 col-md-6 col-12">
-                            <a href='#'>
                             <div className="card restaurant-card h-100">
                                 <div className="card-body position-relative p-md-4 p-3">
                                     <img
@@ -117,17 +129,19 @@ const BusinessList = () => {
                                     </div>
                                 </div>
                             </div>
-                            </a>
                         </div>
                     ))}
                 </div>
-                <div className="text-center mt-5">
-                    <button className="btn-orange px-5 py-3">
-                        <span className="fw-semibold" style={{ fontSize: '21px' }}>
-                            Show More
-                        </span>
-                    </button>
-                </div>
+                {hasMore && (
+                    <div className="text-center mt-5">
+                        <button className="btn-orange px-5 py-3" onClick={fetchBusinessData}>
+                            <span className="fw-semibold" style={{ fontSize: '21px' }}>
+                                Show More
+                            </span>
+                        </button>
+                    </div>
+                )}
+                
             </div>
         </>
     );
