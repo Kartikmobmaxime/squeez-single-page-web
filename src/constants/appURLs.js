@@ -11,5 +11,6 @@ export const config = {
 export const APP_URLs = {
   category:{
     getBusinessList: `${BASE_URL}/mobile/v1/category/ActiveBusinessItemsDetails`,
+    getRestaurantById:`${BASE_URL}/mobile/v1/restaurant`
   },
 };

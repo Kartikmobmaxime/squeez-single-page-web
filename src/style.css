@@ -303,6 +303,10 @@ ul li {
   margin-bottom: 5px;
 }
 
+.cusrsorPointer{
+  cursor: pointer;
+}
+
 
 @media (min-width: 1400px) {
   .container-xl {

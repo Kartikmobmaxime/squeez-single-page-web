@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { getBusinessLists } from '../services/businessService';
 import { useNavigate } from 'react-router-dom';
 import FilterModal from './FilterModal';
-import { LineSpinner } from 'ldrs/react';
 import 'ldrs/react/LineSpinner.css'
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../store/slice/loaderSlice';
