@@ -5,6 +5,7 @@ import { getBusinessDetails } from '../services/businessService';
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../store/slice/loaderSlice';
 import { APP_URLs } from '../constants/appURLs';
+import { formatPhoneNumber, formatTime, powerByImgList } from '../helper/utils';
 
 
 const BusinessDetails = () => {
@@ -12,19 +13,7 @@ const BusinessDetails = () => {
   const dispatch = useDispatch()
 
   const businessId = location?.state?.businessId;
-  const address = '17, rue Notre Dame des Victoires – Paris 2';
-  const phone = '03-2723 1515';
-  const lat = 48.8688;
-  const lng = 2.3416;
-
-  const hours = [
-    'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'
-  ].map(day => (
-    <div className="d-flex justify-content-between gap-4" key={day}>
-      <span className='fw-medium'>{day}</span>
-      <span>11:30 AM - 9:00 PM</span>
-    </div>
-  ));
+  const category = location?.state?.category;
 
   const amenitiesLeft = [
     'Offers Delivery',
@@ -56,9 +45,19 @@ const BusinessDetails = () => {
   }, [])
 
   const fetchBusinessDetails = async () => {
-    dispatch(showLoader())
     try {
-      const url = `${APP_URLs.category.getRestaurantById}`
+      let url = ''
+      if(category === "Restaurants"){
+        url = `${APP_URLs.category.getRestaurantById}`
+      }else if(category === "Hotels"){
+        url = `${APP_URLs.category.getHotelById}`
+      }else if(category === "Golf"){
+        url = `${APP_URLs.category.getGolfById}`
+      }else if(category === "Wellness"){
+        url = `${APP_URLs.category.getWellnessById}`
+      }
+
+      dispatch(showLoader())
       let response = await getBusinessDetails(url, businessId);
       dispatch(hideLoader())
       if (response?.status && response.data) {
@@ -104,25 +103,6 @@ const BusinessDetails = () => {
   const socialmediaLink = (url) => {
     window.open(url, '_blank');
   }
-
-  const formatTime = (timeStr) => {
-    if (!timeStr) return '';
-    const [hour, minute] = timeStr.split(':').map(Number);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
-  };
-
-  const formatPhoneNumber = (phone) => {
-    const cleaned = ('' + phone).replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-    if (match) {
-      return `(${match[1]}) ${match[2]}-${match[3]}`;
-    }
-    return phone;
-  };
-
 
   return (
     <div className="container-fluid container-xl pt-5">
@@ -206,7 +186,7 @@ const BusinessDetails = () => {
 
               <div className="col-md-6">
                 <div className='d-flex justify-content-md-end gap-2'>
-                  <i className="bi bi-clock text-orange pe-2"></i>
+                  {/* <i className="bi bi-clock text-orange pe-2"></i> */}
                   <div>
                     {businessData?.hoursOfOperationList?.map((item, index) => (
                       <>
@@ -348,9 +328,12 @@ const BusinessDetails = () => {
                 <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3" key={slot._id}>{slot.time}</button>
               ))}
             </div>
-            <div>
-              <img src="../../media/img/open-table-logo.svg" alt="Open Table Logo" />
-            </div>
+              {(businessData?.poweredBy > 0) && (
+                <div className='d-flex flex-wrap justify-content-center align-items-center mt-3'>
+                  <p className="mb-1 me-2" style={{ color: '#D9D9D9', fontSize: '12px' }}>POWERED BY</p>
+                  <img src={powerByImgList[businessData?.poweredBy ?? 0]} alt="Open Table Logo"  style={{ maxHeight: '24px', objectFit: 'contain' }} />
+                </div>
+              )}
           </div>
 
           <div className="just-squeez text-white text-center p-xxl-4 p-3 rounded" role="button" onClick={() => handleSqueezClick()}>

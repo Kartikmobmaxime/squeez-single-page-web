@@ -5,6 +5,7 @@ import FilterModal from './FilterModal';
 import 'ldrs/react/LineSpinner.css'
 import { useDispatch } from 'react-redux';
 import { hideLoader, showLoader } from '../store/slice/loaderSlice';
+import { CategoryList } from '../helper/utils';
 
 
 const BusinessList = () => {
@@ -24,6 +25,8 @@ const BusinessList = () => {
         { label: "Person", value: "3 person" },
         { label: "Location", value: "Paris, France" },
     ];
+    const cateId = '65c608806782899b0698f069'
+    const category = CategoryList.find(x => x.id === cateId).name;
 
     useEffect(() => {
         fetchBusinessData()
@@ -33,7 +36,7 @@ const BusinessList = () => {
         const query = {
             offset:offset,
             limit:limit,
-            cateId:"65c608806782899b0698f069"
+            cateId:cateId
         }
         dispatch(showLoader())
         try {
@@ -54,7 +57,7 @@ const BusinessList = () => {
     const navigateToDetail = (businessId) => {
         navigate('/business-details', {
         state: {
-            businessId,
+            businessId,category
         }
         });
     };
