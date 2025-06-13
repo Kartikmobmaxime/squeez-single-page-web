@@ -48,28 +48,49 @@ const BusinessDetails = () => {
     'Good for Groups'
   ];
 
-  const[businessData,setBusinessData] = useState()
+  const [businessData, setBusinessData] = useState()
+  const [availableTimes, setAvailableTimes] = useState([]);
 
   useEffect(() => {
-      fetchBusinessDetails()
-  },[])
+    fetchBusinessDetails()
+  }, [])
 
   const fetchBusinessDetails = async () => {
-      dispatch(showLoader())
-      try {
-          const url = `${APP_URLs.category.getRestaurantById}`
-          let response = await getBusinessDetails(url,businessId);
-          dispatch(hideLoader())
-          if (response?.status && response.data) {
-            setBusinessData(response.data);
+    dispatch(showLoader())
+    try {
+      const url = `${APP_URLs.category.getRestaurantById}`
+      let response = await getBusinessDetails(url, businessId);
+      dispatch(hideLoader())
+      if (response?.status && response.data) {
+        setBusinessData(response.data);
+        let times = response.data?.reservationAvailability;
+        const hasInvalidDate = Array.isArray(times) && times.some(t => t.time === 'Invalid Date');
+        if (!Array.isArray(times) || times.length === 0 || hasInvalidDate) {
+          if ([process.env.REACT_APP_ID_REST_CATE, process.env.REACT_APP_ID_HOTEL_CATE, process.env.REACT_APP_ID_HEALTH_CARE_CATE].includes(response.data.categoryId)) {
+            times = [
+              { time: "4:30 PM", _id: "default1" },
+              { time: "5:00 PM", _id: "default2" },
+              { time: "9:00 PM", _id: "default3" }
+            ];
+          } else if ([process.env.REACT_APP_ID_GOLF_CATE, process.env.REACT_APP_ID_SALOON_CATE].includes(response.data.categoryId)) {
+            times = [
+              { time: "10:50 AM", _id: "default4" },
+              { time: "11:30 AM", _id: "default5" },
+              { time: "3:30 PM", _id: "default6" }
+            ];
+          } else {
+            times = []; // If categoryId is unknown
           }
-      } catch (error) {
-          dispatch(hideLoader())
-      } 
+        }
+        setAvailableTimes(times);
+      }
+    } catch (error) {
+      dispatch(hideLoader())
+    }
   };
 
   const handleSqueezClick = () => {
-    window.open(businessData?.domainLink,'_blank')
+    window.open(businessData?.domainLink, '_blank')
   }
 
   const handleOpenTableClick = () => {
@@ -109,7 +130,7 @@ const BusinessDetails = () => {
       <div className="row g-3 img-section">
         <div className="col-12 col-md-12">
           <img
-            src={businessData?.images[0] ? businessData?.images[0] : "https://t4.ftcdn.net/jpg/02/94/26/33/360_F_294263329_1IgvqNgDbhmQNgDxkhlW433uOFuIDar4.jpg"} 
+            src={businessData?.images[0] ? businessData?.images[0] : "https://t4.ftcdn.net/jpg/02/94/26/33/360_F_294263329_1IgvqNgDbhmQNgDxkhlW433uOFuIDar4.jpg"}
             alt="Main Dining"
             className="img-fluid w-100 details-main-img"
           />
@@ -143,9 +164,9 @@ const BusinessDetails = () => {
             {/* <p className="mb-0">
               In the heart of the city, nestled between two lively alleys in the 2nd arrondissement of Paris, Cali Sisters is an American restaurant that welcomes you from the entrance with a cocktail bar with a cozy atmosphere. Further under the XXL glass roof, by candlelight, enjoy our classic American cuisine - whether it's mac & cheese, meatballs, grilled salmon or wagyu steak, or the famous New York style cheesecake and pizzookie - accompanied by vintage Californian wines, timeless cocktails and "not-so-classics".
             </p> */}
-             <div
-                dangerouslySetInnerHTML={{ __html: businessData?.description }}
-              />
+            <div
+              dangerouslySetInnerHTML={{ __html: businessData?.description }}
+            />
           </div>
 
           {/* Contact */}
@@ -187,16 +208,21 @@ const BusinessDetails = () => {
                 <div className='d-flex justify-content-md-end gap-2'>
                   <i className="bi bi-clock text-orange pe-2"></i>
                   <div>
-                    {businessData?.hoursOfOperationList?.map((item,index) => (
-                      <div className="gap-4 mb-3" key={item?._id}>
-                        <span className='fw-bold'>{item?.day}:</span>
-                        {item?.slots?.map((item,index) => (
-                          <div className="d-flex justify-content-between gap-4" key={item?._id}>
-                            <span className='fw-medium'>{item?.name}</span>
-                            <span>{formatTime(item?.startTime)} - {formatTime(item?.endTime)}</span>
+                    {businessData?.hoursOfOperationList?.map((item, index) => (
+                      <>
+                        {
+                          item?.IsOpen &&
+                          <div className="gap-4 mb-3" key={item?._id}>
+                            <span className='fw-bold'>{item?.day}:</span>
+                            {item?.slots?.map((item, index) => (
+                              <div className="d-flex justify-content-between gap-4" key={item?._id}>
+                                <span className='fw-medium'>{item?.name}</span>
+                                <span>{formatTime(item?.startTime)} - {formatTime(item?.endTime)}</span>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
+                        }
+                      </>
                     ))}
                   </div>
                 </div>
@@ -308,41 +334,33 @@ const BusinessDetails = () => {
               </div>
             </div>
 
-                <button className='btn px-5 py-2 border-secoundry mt-5 rounded-pill border-secondary fs-sm bg-white fw-normal text-dark-gray'>Show More</button>
+            <button className='btn px-5 py-2 border-secoundry mt-5 rounded-pill border-secondary fs-sm bg-white fw-normal text-dark-gray'>Show More</button>
           </div>
         </div>
 
         <div className="col-12 col-lg-4 reser-card mt-lg-0 mt-4">
           {/* Reservation Section */}
-          
-           
-              <div className="bg-primary text-white text-center p-xxl-5 p-3 rounded mb-3 pick-card" role="button" onClick={() => handleOpenTableClick()}>
-                <h2>Pick what’s available</h2>
-                <p className='fw-bold'>Reservation depends on availability.</p>
-                <div className="d-inline-flex justify-content-center gap-2 mb-3 flex-wrap">
-                  <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3">3:30pm</button>
-                  <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3">4:30pm</button>
-                  <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3">9:00pm</button>
-                  <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3">9:00pm</button>
-                  <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3">9:00pm</button>
-                </div>
-                <div>
-<img src="../../media/img/open-table-logo.svg" alt="Open Table Logo" />
-                </div>
-                
-              </div>
-         
+          <div className="bg-primary text-white text-center p-xxl-5 p-3 rounded mb-3 pick-card" role="button" onClick={() => handleOpenTableClick()}>
+            <h2>Pick what’s available</h2>
+            <p className='fw-bold'>Reservation depends on availability.</p>
+            <div className="d-inline-flex justify-content-center gap-2 mb-3 flex-wrap">
+              {availableTimes.map((slot) => (
+                <button className="btn btn-light btn-sm bg-white text-orange rounded-pill px-3" key={slot._id}>{slot.time}</button>
+              ))}
+            </div>
+            <div>
+              <img src="../../media/img/open-table-logo.svg" alt="Open Table Logo" />
+            </div>
+          </div>
 
-           
-              <div className="just-squeez text-white text-center p-xxl-4 p-3 rounded" role="button" onClick={() => handleSqueezClick()}>
-                <div className='just-squeez-inner h-100 p-xxl-4 pt-xxl-5 p-3'>
-                <h2>Can’t get the time you want?</h2>
-                <p className='fw-bold my-3'>See if we can “Squeez” you in.</p>
-                <button className="btn btn-dark btn-sm px-4 py-2 btn-orange fs-xs">Just Squeez It!<span>®</span></button>
-                <p className="m-0 small text-uppercase mt-3 d-flex align-items-center justify-content-center">Powered by<img alt="Squeez Logo" width={80} class="" src="media/SqueezLogo_White.svg"></img></p>
-                </div>
-              </div>
-          
+          <div className="just-squeez text-white text-center p-xxl-4 p-3 rounded" role="button" onClick={() => handleSqueezClick()}>
+            <div className='just-squeez-inner h-100 p-xxl-4 pt-xxl-5 p-3'>
+              <h2>Can’t get the time you want?</h2>
+              <p className='fw-bold my-3'>See if we can “Squeez” you in.</p>
+              <button className="btn btn-dark btn-sm px-4 py-2 btn-orange fs-xs">Just Squeez It!<span>®</span></button>
+              <p className="m-0 small text-uppercase mt-3 d-flex align-items-center justify-content-center">Powered by<img alt="Squeez Logo" width={80} class="" src="media/SqueezLogo_White.svg"></img></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
